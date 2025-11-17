@@ -1,0 +1,16 @@
+John Doe
+Software Engineer
+Email: john.doe@email.com
+
+SUMMARY
+Experienced software developer with 3+ years in JavaScript, React, and Node.js. 
+Strong problem-solving skills and experience with web development.
+
+EXPERIENCE
+Frontend Developer - Tech Corp (2021-Present)
+- Developed web applications using React and JavaScript
+- Built REST APIs with Node.js and Express
+- Collaborated with teams using Git and Agile methodology
+
+SKILLS
+JavaScript, React, Node.js, HTML, CSS, Git, REST APIs

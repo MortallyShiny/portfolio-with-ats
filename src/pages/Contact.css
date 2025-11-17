@@ -1,0 +1,21 @@
+.contact-page {
+  min-height: calc(100vh - 200px);
+  background-color: var(--bg-primary);
+  padding: 2rem 0;
+}
+
+.contact-title {
+  color: var(--text-primary);
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.contact-subtitle {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+
+
+

@@ -1,0 +1,153 @@
+/* ============================================
+   HOME PAGE ELEGANT STYLING
+   ============================================ */
+
+/* Hero Section */
+.hero-section {
+    background-color: var(--bg-tertiary) !important;
+    transition: background-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 200%;
+    background: radial-gradient(circle, var(--accent-primary) 0%, transparent 70%);
+    opacity: 0.05;
+    animation: float 20s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(-30px, -30px) rotate(180deg); }
+}
+
+/* Primary CTA Button */
+.custom-cta-btn {
+    background-color: var(--accent-primary) !important;
+    border-color: var(--accent-primary) !important;
+    color: white !important;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+}
+
+.custom-cta-btn:hover {
+    background-color: var(--accent-hover) !important;
+    border-color: var(--accent-hover) !important;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Secondary Outline Button */
+.custom-outline-btn {
+    border: 2px solid var(--text-secondary) !important;
+    color: var(--text-secondary) !important;
+    background-color: transparent !important;
+    transition: all 0.3s ease;
+}
+
+.custom-outline-btn:hover {
+    background-color: var(--accent-primary) !important;
+    color: white !important;
+    border-color: var(--accent-primary) !important;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Features Section */
+.features-section {
+    background-color: var(--bg-secondary) !important;
+    transition: background-color 0.3s ease;
+}
+
+.features-section .card {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    transition: all 0.3s ease;
+    border-radius: 16px !important;
+}
+
+.features-section .card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-primary) !important;
+}
+
+.features-section .card-title {
+    color: var(--text-primary) !important;
+    transition: color 0.3s ease;
+}
+
+.features-section .card-text {
+    color: var(--text-muted);
+    transition: color 0.3s ease;
+}
+
+[data-theme='dark'] .features-section .card-text,
+[data-theme='dark'] .features-section .card-text.text-muted {
+    color: #FFFFFF !important;
+}
+
+/* FAQ Section */
+.faq-section {
+    background-color: var(--bg-tertiary) !important;
+    transition: background-color 0.3s ease;
+}
+
+.faq-section .accordion-item {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    transition: all 0.3s ease;
+}
+
+.faq-section .accordion-button {
+    background-color: var(--card-bg) !important;
+    color: var(--text-primary) !important;
+    transition: all 0.3s ease;
+}
+
+.faq-section .accordion-button:not(.collapsed) {
+    background-color: var(--bg-secondary) !important;
+    color: var(--accent-primary) !important;
+    box-shadow: none;
+}
+
+.faq-section .accordion-button:focus {
+    box-shadow: 0 0 0 0.25rem rgba(181, 101, 118, 0.25);
+    border-color: var(--accent-primary);
+}
+
+[data-theme='dark'] .faq-section .accordion-button:focus {
+    box-shadow: 0 0 0 0.25rem rgba(217, 119, 166, 0.25);
+}
+
+.faq-section .accordion-body {
+    background-color: var(--card-bg) !important;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+}
+
+/* Hero Image Container */
+.hero-image-container {
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+    transition: all 0.3s ease;
+}
+
+/* Section Headings */
+h2.display-4 {
+    color: var(--text-primary) !important;
+    transition: color 0.3s ease;
+}
+
+.lead {
+    color: var(--text-muted) !important;
+    transition: color 0.3s ease;
+}

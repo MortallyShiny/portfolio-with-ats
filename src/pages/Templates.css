@@ -1,0 +1,76 @@
+.templates-wrapper {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.templates-title {
+  font-size: 2.3rem;
+  font-weight: 700;
+}
+
+.templates-subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+/* Grid layout */
+.templates-list {
+  display: grid;
+  gap: 1.4rem;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+}
+
+/* Template card */
+.template-item {
+  background: var(--card-bg);
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  padding: 1.7rem;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.template-item:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-primary);
+  box-shadow: var(--shadow-md);
+}
+
+/* Title + description */
+.template-title {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.template-desc {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+/* Buttons */
+.template-actions {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.preview-btn {
+  border-radius: 8px;
+  padding: 0.55rem 1rem;
+}
+
+.use-btn {
+  border-radius: 8px;
+  padding: 0.55rem 1rem;
+  font-weight: 600;
+}
+
+/* Mobile tweaks */
+@media (max-width: 576px) {
+  .template-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

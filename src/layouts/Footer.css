@@ -1,0 +1,72 @@
+/* ============================================
+   FOOTER ELEGANT STYLING
+   ============================================ */
+
+/* Footer Section */
+.footer-section {
+    background-color: var(--bg-secondary) !important;
+    transition: background-color 0.3s ease;
+}
+
+/* Separation Border */
+.custom-footer-border {
+    border-top: 1px solid var(--border-color);
+    transition: border-color 0.3s ease;
+}
+
+/* Footer Headings */
+.footer-section h5,
+.footer-section h6 {
+    color: var(--text-primary) !important;
+    font-weight: 700;
+    transition: color 0.3s ease;
+}
+
+/* Footer Text */
+.footer-section p {
+    color: var(--text-muted);
+    transition: color 0.3s ease;
+}
+
+/* Footer Links */
+.footer-section a {
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.footer-section a:hover {
+    color: var(--accent-primary) !important;
+    transform: translateX(4px);
+}
+
+/* Social Media Icons */
+.footer-icon-link {
+    font-size: 1.5rem;
+    color: var(--text-secondary) !important;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: transparent;
+}
+
+.footer-icon-link:hover {
+    color: var(--accent-primary) !important;
+    background-color: var(--bg-secondary);
+    transform: translateY(-3px) scale(1.1);
+}
+
+/* Copyright Border */
+.footer-section .border-top {
+    border-color: var(--border-color) !important;
+    transition: border-color 0.3s ease;
+}
+
+/* Footer Copyright Text */
+.footer-section .text-muted {
+    color: var(--text-muted) !important;
+}

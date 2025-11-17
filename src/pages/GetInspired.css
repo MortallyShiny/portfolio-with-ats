@@ -1,0 +1,129 @@
+.get-inspired-page {
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+  }
+  
+  .getinspired-title {
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  
+  .getinspired-subtitle {
+    color: var(--text-muted);
+    font-size: 1rem;
+  }
+  
+  /* Filter & Sort Controls */
+  .filter-sort-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .form-select {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    padding: 0.4rem 0.75rem;
+    transition: all 0.3s ease;
+    min-width: 150px;
+  }
+  
+  .form-select:hover,
+  .form-select:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 0.2rem rgba(181, 101, 118, 0.15);
+    outline: none;
+  }
+  
+  /* Portfolio Cards */
+  .portfolio-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .portfolio-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-md);
+  }
+  
+  /* Header */
+  .portfolio-header {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+  }
+  
+  .portfolio-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  
+  .portfolio-actions i {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .portfolio-actions i:hover {
+    color: var(--accent-primary);
+    transform: scale(1.2);
+  }
+  
+  .text-accent {
+    color: var(--accent-primary);
+    font-weight: 600;
+  }
+  
+  /* Description */
+  .portfolio-description {
+    color: var(--text-secondary);
+    line-height: 1.5;
+    font-size: 0.95rem;
+    min-height: 90px;
+  }
+  
+  /* Footer */
+  .portfolio-footer {
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.75rem;
+    font-size: 0.9rem;
+  }
+  
+  .portfolio-madeby {
+    color: var(--text-secondary);
+  }
+  
+  .portfolio-date {
+    color: var(--text-muted);
+    font-style: italic;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .filter-sort-controls {
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+  
+    .portfolio-card {
+      padding: 1.25rem;
+    }
+  
+    .portfolio-description {
+      min-height: auto;
+    }
+  }
+  

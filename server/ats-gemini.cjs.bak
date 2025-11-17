@@ -1,0 +1,226 @@
+require('dotenv').config();
+const express = require('express');
+const multer = require('multer');
+const fs = require('fs/promises');
+const pdfParse = require('pdf-parse');
+const mammoth = require('mammoth');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
+const { createClient } = require('@supabase/supabase-js');
+
+const router = express.Router();
+const upload = multer({ dest: 'uploads/' });
+
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const BUCKET = process.env.SUPABASE_BUCKET || 'resumes';
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+
+const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
+  auth: { persistSession: false }
+});
+
+const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+
+const CANDIDATE_MODELS = [
+  'gemini-2.5-pro',
+  'gemini-2.5-flash',
+  'gemini-2.0-flash',
+  'gemini-2.0-flash-lite'
+];
+
+async function tryModel(modelId, prompt) {
+  try {
+    const m = genAI.getGenerativeModel({ model: modelId });
+    const result = await m.generateContent(prompt);
+    return { ok: true, result };
+  } catch (err) {
+    return { ok: false, err };
+  }
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function uploadToSupabase(localFilePath, originalName, mime) {
+  const buffer = await fs.readFile(localFilePath);
+  const key = `${Date.now()}_${originalName.replace(/\s+/g, '_')}`;
+
+  const { data, error } = await supabaseAdmin.storage
+    .from(BUCKET)
+    .upload(key, buffer, { contentType: mime });
+
+  if (error) throw error;
+
+  const { data: signedData, error: signErr } =
+    await supabaseAdmin.storage.from(BUCKET).createSignedUrl(data.path, 3600);
+
+  if (signErr) throw signErr;
+
+  return signedData.signedUrl;
+}
+
+async function extractText(path, mime) {
+  if (!path) return '';
+  if (mime && mime.includes('pdf')) {
+    const buf = await fs.readFile(path);
+    const parsed = await pdfParse(buf);
+    return parsed.text || '';
+  }
+  if (mime && (mime.includes('word') || mime.includes('docx'))) {
+    const buf = await fs.readFile(path);
+    const r = await mammoth.extractRawText({ buffer: buf });
+    return r.value || '';
+  }
+  return fs.readFile(path, 'utf8');
+}
+
+function heuristicATS(resume, job) {
+  resume = (resume || '').toLowerCase();
+  job = (job || '').toLowerCase();
+
+  const words = [...new Set(job.split(/\W+/).filter(w => w.length > 2))];
+
+  const matched = words.filter(w => resume.includes(w));
+  const missing = words.filter(w => !resume.includes(w));
+
+  const score = words.length === 0 ?
+    0 :
+    Math.round((matched.length / words.length) * 100);
+
+  return {
+    score,
+    keywordsMatched: matched,
+    missingKeywords: missing,
+    recommendations: [
+      "Add more keywords from the job description.",
+      "Improve detail and measurable achievements.",
+      "Highlight relevant technologies."
+    ],
+    strengths: matched
+  };
+}
+
+function extractTextFromModelRes(r) {
+  try {
+    if (r?.response?.text) return r.response.text();
+    if (r?.candidates?.[0]?.content?.parts?.[0]?.text)
+      return r.candidates[0].content.parts[0].text;
+    return JSON.stringify(r);
+  } catch {
+    return JSON.stringify(r);
+  }
+}
+
+function cleanModelOutput(raw) {
+  if (!raw) return raw;
+
+  let txt = raw.trim();
+  txt = txt.replace(/```json/gi, '').replace(/```/g, '').trim();
+
+  const first = txt.indexOf('{');
+  const last = txt.lastIndexOf('}');
+  if (first !== -1 && last !== -1) {
+    return txt.substring(first, last + 1);
+  }
+
+  return txt;
+}
+
+async function runModels(prompt) {
+  let lastErr = null;
+
+  for (let i = 0; i < CANDIDATE_MODELS.length; i++) {
+    const m = CANDIDATE_MODELS[i];
+
+    if (i > 0) await sleep(200 * i);
+
+    const r = await tryModel(m, prompt);
+    if (r.ok) return { ok: true, model: m, result: r.result };
+    lastErr = r.err;
+  }
+
+  return { ok: false, err: lastErr };
+}
+
+router.post('/ats-gemini', upload.single('resume'), async (req, res) => {
+  try {
+    const jobDescription = req.body.jobDescription || '';
+    if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
+
+    const resumeText = await extractText(req.file.path, req.file.mimetype);
+
+    let signedURL = null;
+    try {
+      signedURL = await uploadToSupabase(
+        req.file.path,
+        req.file.originalname,
+        req.file.mimetype
+      );
+    } catch (e) {
+      console.error('Supabase error:', e);
+    }
+
+    const prompt = `
+Return STRICT JSON ONLY:
+
+{
+  "score": number,
+  "keywordsMatched": string[],
+  "missingKeywords": string[],
+  "recommendations": string[]
+}
+
+JOB:
+${jobDescription}
+
+RESUME:
+${resumeText}
+`;
+
+    const run = await runModels(prompt);
+
+    if (run.ok) {
+      const raw = extractTextFromModelRes(run.result);
+      const cleaned = cleanModelOutput(raw);
+
+      let parsed;
+      try {
+        parsed = JSON.parse(cleaned);
+      } catch {
+        try {
+          const match = cleaned.match(/\{[\s\S]*\}/);
+          parsed = JSON.parse(match[0]);
+        } catch {
+          parsed = { error: 'Cannot parse model output', raw };
+        }
+      }
+
+      await fs.unlink(req.file.path).catch(() => {});
+      return res.json({
+        success: true,
+        signedURL,
+        used: run.model,
+        ats: parsed
+      });
+    }
+
+    const h = heuristicATS(resumeText, jobDescription);
+    await fs.unlink(req.file.path).catch(() => {});
+    return res.json({
+      success: true,
+      signedURL,
+      used: 'heuristic',
+      ats: h,
+      note: run.err?.message || String(run.err)
+    });
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      error: err?.message || String(err)
+    });
+  }
+});
+
+module.exports = router;

@@ -1,0 +1,224 @@
+/* ============================================
+   NAVBAR ELEGANT STYLING
+   ============================================ */
+
+/* Custom Background */
+.custom-navbar-bg {
+    background-color: var(--navbar-bg) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-sm);
+    border-bottom: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+/* Navbar Brand */
+.navbar-brand {
+    color: var(--text-primary) !important;
+    font-weight: 700;
+    font-size: 1.5rem !important;
+    transition: color 0.3s ease;
+    letter-spacing: -0.5px;
+}
+
+.navbar-brand:hover {
+    color: var(--accent-primary) !important;
+}
+
+/* Custom Link Color */
+.custom-nav-link-color {
+    color: var(--text-secondary) !important;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    position: relative;
+}
+
+.custom-nav-link-color::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-primary);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.custom-nav-link-color:hover::after {
+    width: 80%;
+}
+
+.custom-nav-link-color:hover {
+    color: var(--accent-primary) !important;
+}
+
+/* Login Button (Minimal Style) */
+.custom-login-btn {
+    color: var(--text-secondary) !important;
+    background-color: transparent !important;
+    border: none !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem !important;
+    transition: all 0.2s ease;
+}
+
+.custom-login-btn:hover {
+    color: var(--accent-primary) !important;
+    background-color: transparent !important;
+    transform: translateY(-1px);
+}
+
+/* Primary CTA Button */
+.custom-cta-btn {
+    background-color: var(--accent-primary) !important;
+    border-color: var(--accent-primary) !important;
+    color: white !important;
+    font-weight: 600;
+    padding: 0.5rem 1.5rem !important;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.custom-cta-btn:hover {
+    background-color: var(--accent-hover) !important;
+    border-color: var(--accent-hover) !important;
+    color: white !important;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+    background-color: transparent !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-secondary) !important;
+    padding: 0.5rem 0.75rem !important;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-right: 0.75rem;
+}
+
+.theme-toggle-btn:hover {
+    background-color: var(--bg-tertiary) !important;
+    border-color: var(--accent-primary) !important;
+    color: var(--accent-primary) !important;
+    transform: rotate(15deg);
+}
+
+.theme-toggle-btn i {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle-btn:hover i {
+    transform: scale(1.1);
+}
+
+/* Navbar Toggler (Mobile) */
+.navbar-toggler {
+    border: 1px solid var(--border-color) !important;
+    padding: 0.25rem 0.5rem !important;
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 0.2rem rgba(var(--accent-primary-rgb), 0.25);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(74, 78, 105, 0.75)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+[data-theme='dark'] .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(245, 245, 245, 0.75)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* User Greeting */
+.user-greeting {
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+.active-nav {
+    color: var(--accent-primary) !important;
+    font-weight: 600;
+    position: relative;
+  }
+  
+  .active-nav::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 2px;
+    background-color: var(--accent-primary);
+    border-radius: 10px;
+    transition: width 0.3s ease;
+  }
+  .custom-navbar {
+  background-color: var(--navbar-bg);
+  box-shadow: var(--shadow-md);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1000;
+}
+
+.navbar-brand {
+  font-size: 1.4rem;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.navbar-brand:hover {
+  color: var(--accent-primary);
+}
+
+.navbar-links .nav-link {
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
+}
+
+.navbar-links .nav-link:hover {
+  color: var(--accent-primary);
+}
+
+.active-nav {
+  color: var(--accent-primary) !important;
+  font-weight: 600;
+}
+
+.theme-toggle-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 1.3rem;
+}
+
+.theme-toggle-btn:hover {
+  color: var(--accent-primary);
+}
+
+.sidebar-toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+.sidebar-toggle-btn:hover {
+  color: var(--accent-primary);
+}
+
+.user-greeting {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
