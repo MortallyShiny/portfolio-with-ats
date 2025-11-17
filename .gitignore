@@ -1,0 +1,11 @@
+# node
+node_modules/
+dist/
+.env
+.env.local
+.DS_Store
+.vscode/
+server.log
+uploads/
+# optionally lockfiles if you want
+# package-lock.json
